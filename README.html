@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20261017-aws-amazon-ec2-free</title>
+<style>
+:root{--navy1:#12224d;--navy2:#2f5fbf;--ink:#1c2330;--line:#d9dfe8;--link:#1a4fa0;--accent:var(--navy1);--accent2:var(--navy2);--soft:#f2f5fb;}
+.ch01{--accent:hsl(280,78%,25%);--accent2:hsl(280,58%,55%);--soft:hsl(280,28%,95%);}
+.ch02{--accent:hsl(0,78%,25%);--accent2:hsl(0,58%,55%);--soft:hsl(0,28%,95%);}
+body{margin:0;background:#fff;color:var(--ink,#1c2330);font-family:"Yu Gothic UI","Meiryo",sans-serif;font-size:15.5px;line-height:1.85;}
+a{color:var(--link,#1a4fa0);background:transparent;}
+.titlebar{background:linear-gradient(135deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;padding:34px 30px 30px;}
+.titlebar .inner{max-width:1600px;margin:0 auto;}
+.titlebar h1{font-size:1.8em;margin:0 0 6px;color:#fff;}
+.titlebar .lead,.titlebar .date{color:#e6ecf8;background:transparent;font-size:.9em;margin:2px 0;}
+.wrap{max-width:1600px;margin:0 auto;padding:0 30px;}
+.backlink{margin:18px 0 0;}
+a.back-home{display:inline-block;padding:0 9px;border-radius:6px;background:linear-gradient(100deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;text-decoration:none;font-weight:700;}
+section{background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:var(--ink,#1c2330);padding:4px 26px 26px;margin:34px 0;border-radius:8px;}
+section h1{background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));color:#fff;padding:14px 20px;margin:26px 0 20px;border-radius:8px;font-size:1.4em;box-shadow:0 3px 8px rgba(0,0,0,.18);}
+code{background:#f4f6fa;border:1px solid var(--line,#d9dfe8);color:#17335f;padding:0 4px;border-radius:4px;}
+footer{max-width:1600px;margin:0 auto;padding:18px 30px 30px;}
+</style>
+</head>
+<body>
+<div class="titlebar"><div class="inner">
+<h1>20261017-aws-amazon-ec2-free</h1>
+<p class="lead">AWS の無料枠で Amazon EC2 インスタンスを 1 台作り、料金を発生させずに運用・停止するための計画と記録</p>
+<p class="date">📅 作成: 2026-10-17 / 更新: 2026-10-17</p>
+</div></div>
+<div class="wrap">
+<p class="backlink"><a class="back-home" href="../" title="親サイト">⌂</a></p>
+
+<p>東京リージョンの <code>t3.micro</code> に Amazon Linux 2023 を載せ、SSM Session Manager で接続する構成を、AWS CLI のスクリプトで作る。手順と判断の根拠をここに残す。</p>
+
+<section class="ch01" id="ch01">
+<h1>計画</h1>
+<ul>
+<li><a href="notes/10_plan/p261017-01-EC2無料インスタンス作成.html">計画: Amazon EC2 無料枠インスタンスの作成</a></li>
+</ul>
+</section>
+
+<section class="ch02" id="ch02">
+<h1>状態</h1>
+<ul>
+<li><a href="notes/30_status/status.html">状態: 20261017-aws-amazon-ec2-free</a></li>
+</ul>
+</section>
+</div>
+<footer><a class="back-home" href="../" title="親サイト">⌂</a></footer>
+</body>
+</html>

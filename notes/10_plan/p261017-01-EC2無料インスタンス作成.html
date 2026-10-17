@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>計画: Amazon EC2 無料枠インスタンスの作成</title>
+<style>
+:root{--navy1:#12224d;--navy2:#2f5fbf;--ink:#1c2330;--ink-soft:#4a5568;--line:#d9dfe8;--code-bg:#f4f6fa;--link:#1a4fa0;--accent:var(--navy1);--accent2:var(--navy2);--soft:#f2f5fb;}
+.ch01{--accent:hsl(280,78%,25%);--accent2:hsl(280,58%,55%);--soft:hsl(280,28%,95%);}
+.ch02{--accent:hsl(210,78%,25%);--accent2:hsl(210,58%,55%);--soft:hsl(210,28%,95%);}
+.ch03{--accent:hsl(140,78%,25%);--accent2:hsl(140,58%,55%);--soft:hsl(140,28%,95%);}
+.ch04{--accent:hsl(70,78%,25%);--accent2:hsl(70,58%,55%);--soft:hsl(70,28%,95%);}
+.ch05{--accent:hsl(0,78%,25%);--accent2:hsl(0,58%,55%);--soft:hsl(0,28%,95%);}
+body{margin:0;background:#fff;color:var(--ink,#1c2330);font-family:"Yu Gothic UI","Meiryo",sans-serif;font-size:15.5px;line-height:1.85;}
+a{color:var(--link,#1a4fa0);background:transparent;}
+.titlebar{background:linear-gradient(135deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;padding:34px 30px 30px;}
+.titlebar .inner{max-width:1600px;margin:0 auto;}
+.titlebar h1{font-size:1.8em;margin:0 0 6px;color:#fff;}
+.titlebar .lead,.titlebar .date{color:#e6ecf8;background:transparent;font-size:.9em;margin:2px 0;}
+.wrap{max-width:1600px;margin:0 auto;padding:0 30px;}
+.backlink{margin:18px 0 0;}
+a.back-home{display:inline-block;padding:0 9px;border-radius:6px;background:linear-gradient(100deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;text-decoration:none;font-weight:700;}
+.toc ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;counter-reset:tocnum;}
+.toc ol li{counter-increment:tocnum;}
+.toc ol a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;width:310px;max-width:100%;padding:6px 12px;border-radius:6px;background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));color:#fff;text-decoration:none;font-weight:700;}
+.toc ol a::before{content:counter(tocnum) ". ";}
+section{background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:var(--ink,#1c2330);padding:4px 26px 26px;margin:34px 0;border-radius:8px;}
+section h1{background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));color:#fff;padding:14px 20px;margin:26px 0 20px;border-radius:8px;font-size:1.4em;box-shadow:0 3px 8px rgba(0,0,0,.18);}
+h2{border-left:6px solid var(--accent,#12224d);background:linear-gradient(90deg,var(--soft,#f2f5fb),#fff);color:var(--ink,#1c2330);padding:6px 12px;margin:30px 0 12px;font-size:1.15em;}
+code{background:var(--code-bg,#f4f6fa);border:1px solid var(--line,#d9dfe8);color:#17335f;padding:0 4px;border-radius:4px;}
+pre{background:linear-gradient(180deg,var(--code-bg,#f4f6fa),#fff);color:var(--ink,#1c2330);border-left:5px solid var(--accent2,#2f5fbf);padding:13px 16px;overflow-x:auto;}
+pre code{border:none;background:transparent;padding:0;}
+.tablewrap{overflow-x:auto;}
+table{border-collapse:collapse;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08);}
+th{background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));color:#fff;padding:9px 12px;text-align:left;}
+td{background:#fff;color:var(--ink,#1c2330);padding:9px 12px;border-top:1px solid var(--line,#d9dfe8);vertical-align:top;}
+tr:nth-child(even) td{background:#fafbfe;}
+.nowrap{white-space:nowrap;}
+.badge{display:inline-block;padding:0 8px;border-radius:6px;color:#fff;white-space:nowrap;font-weight:700;}
+.b-none{background:linear-gradient(100deg,#5a6472,#97a1ae);color:#fff;}
+.callout{border-left:6px solid var(--accent,#12224d);background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:var(--ink,#1c2330);border-radius:0 8px 8px 0;padding:10px 16px;margin:14px 0;}
+.callout strong{color:var(--accent,#12224d);background:transparent;}
+footer{max-width:1600px;margin:0 auto;padding:18px 30px 30px;}
+</style>
+</head>
+<body>
+<div class="titlebar"><div class="inner">
+<h1>計画: Amazon EC2 無料枠インスタンスの作成</h1>
+<p class="lead">結論: 不採用（2026-10-17 決定）。既存アカウントは無料枠が終了済みで、最小クラスはメモリが小さく実用にならない</p>
+<p class="date">📅 作成: 2026-10-17 / 更新: 2026-10-17</p>
+</div></div>
+<div class="wrap">
+<p class="backlink"><a class="back-home" href="../../README.html" title="README">⌂</a></p>
+
+<nav class="toc"><ol>
+<li class="ch01"><a href="#ch01">目的と前提</a></li>
+<li class="ch02"><a href="#ch02">無料枠の調査結果</a></li>
+<li class="ch03"><a href="#ch03">構成案と決めること</a></li>
+<li class="ch04"><a href="#ch04">手順</a></li>
+<li class="ch05"><a href="#ch05">課金を防ぐ対策と後片付け</a></li>
+</ol></nav>
+
+<section class="ch01" id="ch01">
+<h1>目的と前提</h1>
+<div class="callout callout-important"><strong>結論: AWS の EC2 は使わない。</strong>理由は 3 点。既存アカウントの無料枠は 2017-02 に終了済み。EC2 に常時無料の枠は無い。最小クラス（<code>nano</code>・0.5 GB）は実用にならず、実用的な <code>t3.micro</code> は月 2,100 円ほど（概算・未確認）かかる。以降の章は、検討した内容の記録として残す。</div>
+<ul>
+<li>目的（当初）: EC2 インスタンスを 1 台作成し、接続できることを確かめる。今のアカウントは無料枠が終了済みのため、少額の課金を前提にしていた</li>
+<li>方針: 別のアカウントは作らない。既存のアカウントで進める</li>
+<li>前提: AWS アカウントを持っている（無い場合は作成から）。ルートユーザでは日常作業をしない</li>
+<li>作業場所: このプロジェクトに手順・スクリプトを残し、同じ構成を作り直せるようにする</li>
+</ul>
+</section>
+
+<section class="ch02" id="ch02">
+<h1>無料枠の調査結果</h1>
+<h2>このアカウントの状況（実測）</h2>
+<ul>
+<li>作成日は 2016-02-20（JST）。Gmail に残る AWS の歓迎メールの受信日で判定した</li>
+<li>旧方式（作成から 12 か月）のため、無料枠は 2017-02 に終了済み（失効予告のメールも 2017-02 に届いている）</li>
+<li>コンソールの確認: 無料利用枠のページに使用中の項目は CloudWatch（常時無料）だけで、EC2 は無い。クレジットは残高 0 ドル</li>
+<li>結論: <strong>このアカウントの EC2 は無料ではない</strong>。起動時間・EBS・パブリック IPv4 が通常料金で課金される</li>
+</ul>
+<h2>常時無料は無い</h2>
+<ul>
+<li>EC2 に常時無料の枠は無い。常時無料はサーバを常駐させる種類ではない（Lambda・DynamoDB・CloudWatch・SNS・SQS の少量分など）</li>
+<li>EC2 の無料は期間限定のみ（旧方式は 12 か月、新方式はクレジットで最長 6 か月）</li>
+</ul>
+<h2>別アカウントを作る場合（採らない）</h2>
+<ul>
+<li>2025-07-15 以降に作った新しいアカウントには、新方式の無料プラン（クレジット最大 200 USD・最長 6 か月）が付く。しばらく無料で使える</li>
+<li>別アカウントを作る方針は採らない。この選択肢は記録として残す</li>
+</ul>
+<h2>他社の常時無料枠（候補として残す）</h2>
+<ul>
+<li>Google Cloud: <code>e2-micro</code> が 1 台、米国の一部リージョンで常時無料（東京は対象外）</li>
+<li>Oracle Cloud: Arm の VM（最大 4 コア・24 GB）などが常時無料。新規登録の審査が厳しい</li>
+<li>どちらも現行条件は未確認。採るときは公式ページで確かめる</li>
+</ul>
+<h2>最小クラスの月額（概算・未確認）</h2>
+<ul>
+<li>東京・24 時間稼働・EBS gp3 8 GB・1 ドル 150 円で計算。パブリック IPv4（約 3.65 ドル）を含む</li>
+<li><code>t4g.nano</code> 約 8.4 ドル（約 1,300 円） / <code>t3.nano</code> 約 9.4 ドル（約 1,400 円） / <code>t3.micro</code> 約 14.3 ドル（約 2,100 円）</li>
+</ul>
+<h2>公式ページでの確認が要る点</h2>
+<p>以下は 2025-07-15 の無料枠改定時点の知識に基づく。<strong>現在（2026-10）の公式ページで着手前に確かめる</strong>。東京の <code>t3.micro</code> は稼働 1 時間あたり約 0.0136 USD（約 10 USD/月）と記憶しているが、未確認。</p>
+<h2>無料枠の一般条件（参考）</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>アカウント作成日</th><th>無料枠の形</th><th>対象インスタンス</th></tr></thead>
+<tbody>
+<tr><td class="nowrap">2025-07-15 より前</td><td>作成から 12 か月、毎月 750 時間</td><td><code>t2.micro</code> / <code>t3.micro</code>（リージョンによる）</td></tr>
+<tr><td class="nowrap">2025-07-15 以降</td><td>無料プラン: クレジット（最大 200 USD）・最長 6 か月</td><td><code>t3.micro</code> <code>t3.small</code> <code>t4g.micro</code> <code>t4g.small</code> <code>c7i-flex.large</code> <code>m7i-flex.large</code> 等</td></tr>
+</tbody>
+</table></div>
+<ul>
+<li>EBS: 30 GB（gp2/gp3）まで</li>
+<li><strong>パブリック IPv4 アドレスは 2024-02 から有料</strong>（旧無料枠では 750 時間分が無料枠に含まれる）。新プランではクレジットから引かれる</li>
+<li>確認先: AWS 無料利用枠のページ、コンソールの「Billing → 無料利用枠」</li>
+</ul>
+</section>
+
+<section class="ch03" id="ch03">
+<h1>構成案と決めること</h1>
+<p>決定: 1-A・2-A・3-A・4-A（各項目の A）。</p>
+<h2>1. 作成手段</h2>
+<ul>
+<li><strong>1-A（推奨）AWS CLI のスクリプトで作る</strong>: 手順が残り、作り直し・削除も同じスクリプトで行える</li>
+<li>1-B マネジメントコンソールで手作業: 初回の理解には向くが、記録が手順書だけになる</li>
+</ul>
+<h2>2. OS</h2>
+<ul>
+<li><strong>2-A（推奨）Amazon Linux 2023</strong>: SSM Agent が最初から入っており、2-A の接続方式とそのまま組める</li>
+<li>2-B Ubuntu 24.04 LTS: 情報が多い。SSM Agent は snap で入っている</li>
+</ul>
+<h2>3. 接続方式</h2>
+<ul>
+<li><strong>3-A（推奨）SSM Session Manager</strong>: 22 番を開けずに済み、鍵の管理も要らない。IAM ロールの付与が必要</li>
+<li>3-B SSH（キーペア）: 22 番を自分の IP だけに開ける。鍵（<code>.pem</code>）は Git に入れない（.gitignore 済み）</li>
+</ul>
+<h2>4. リージョン・アーキテクチャ</h2>
+<ul>
+<li><strong>4-A（推奨）東京 <code>ap-northeast-1</code>・<code>t3.micro</code>（x86_64）</strong>: 新旧どちらの無料枠でも対象</li>
+<li>4-B <code>t4g.micro</code>（Arm）: 新プランでのみ対象。x86 専用のソフトは動かない</li>
+</ul>
+</section>
+
+<section class="ch04" id="ch04">
+<h1>手順</h1>
+<div class="tablewrap"><table>
+<thead><tr><th>#</th><th>作業</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>EC2 の料金（東京・<code>t3.micro</code>・パブリック IPv4・EBS）を公式ページで確認</td></tr>
+<tr><td>2</td><td>ルートの MFA 有効化、作業用 IAM ユーザ（または IAM Identity Center）作成</td></tr>
+<tr><td>3</td><td>予算アラート（AWS Budgets、0.01 USD 超で通知）と無料枠の使用量アラートを設定</td></tr>
+<tr><td>4</td><td>AWS CLI v2 を導入し <code>aws configure sso</code> 等で認証</td></tr>
+<tr><td>5</td><td>セキュリティグループ作成（3-A なら受信ルールなし）</td></tr>
+<tr><td>6</td><td>IAM ロール（<code>AmazonSSMManagedInstanceCore</code>）とインスタンスプロファイル作成</td></tr>
+<tr><td>7</td><td>インスタンス起動（<code>t3.micro</code>・EBS gp3 8〜30 GB・タグ付け）</td></tr>
+<tr><td>8</td><td>接続確認（<code>aws ssm start-session</code>）</td></tr>
+<tr><td>9</td><td>停止・削除のスクリプトを用意し、動作を確かめる</td></tr>
+</tbody>
+</table></div>
+<p>進み具合は <a href="../30_status/status.html">status</a> に置く。</p>
+<p>スクリプトは <code>tools/70_deploy/</code> に ps1 ＋同名 cmd で置く（実行は利用者の確認後）。</p>
+<pre><code class="language-powershell">aws ec2 run-instances --region "ap-northeast-1" --instance-type "t3.micro" `
+  --image-id "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64" `
+  --iam-instance-profile "Name=ec2-ssm-free" --security-group-ids "&lt;sg-id&gt;" `
+  --block-device-mappings "DeviceName=/dev/xvda,Ebs={VolumeSize=8,VolumeType=gp3}" `
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=free-ec2}]"</code></pre>
+</section>
+
+<section class="ch05" id="ch05">
+<h1>課金を防ぐ対策と後片付け</h1>
+<ul>
+<li>今のアカウントは無料枠が終了済み。起動した時間・EBS・パブリック IPv4 がすべて課金される。使わない間は終了（terminate）する</li>
+<li>インスタンスは 1 台だけ。常時動かすと月 730 時間ぶんが課金される</li>
+<li>停止中も EBS・スナップショット・Elastic IP（未割り当て）は課金対象</li>
+<li>NAT ゲートウェイ・ロードバランサ・無料枠外のインスタンスタイプを使わない</li>
+<li>削除はインスタンス終了 → EBS 残存確認 → セキュリティグループ・ロール削除の順</li>
+</ul>
+<div class="callout callout-caution"><strong>アクセスキーを Git やチャットに貼らない。</strong>漏れると第三者に高額のインスタンスを立てられ、請求は取り消せないことがある。</div>
+</section>
+
+</div>
+<footer><a class="back-home" href="../../README.html" title="README">⌂</a></footer>
+</body>
+</html>

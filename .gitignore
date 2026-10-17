@@ -1,0 +1,15 @@
+tmp/
+etc/
+logs/
+_*
+
+.claude/*
+!.claude/settings.json
+!.claude/commands/
+!.claude/agents/
+!.claude/skills/
+
+# AWS の鍵・認証情報
+*.pem
+*.ppk
+.aws/
