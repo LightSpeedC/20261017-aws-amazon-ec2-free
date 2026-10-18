@@ -1,4 +1,4 @@
-# 20261017-aws-amazon-ec2-free
+# Amazon EC2 無料枠でサーバを作る検討
 
 AWS の無料枠で、Amazon EC2 のサーバを作れるかを検討した記録
 
